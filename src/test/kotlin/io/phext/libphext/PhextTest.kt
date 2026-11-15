@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 import java.io.File
 
 /**
- * Port of libphext-rs `src/test_lib.rs` (55 tests), assertion for assertion
+ * Port of libphext-rs `src/test_lib.rs` (54 tests), assertion for assertion
  * wherever the platforms agree. Divergences, all forced by Kotlin/JVM types:
  * - components are Long (signed 64-bit) where Rust uses usize (unsigned):
  *   the "largest component" TryFrom case uses Long.MAX_VALUE, and
