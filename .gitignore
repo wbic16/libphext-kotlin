@@ -1,0 +1,8 @@
+.gradle/
+build/
+out/
+.gradle-test-kit/
+*.class
+unit-test.phext
+.idea/
+*.iml
