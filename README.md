@@ -2,8 +2,8 @@
 
 A Kotlin/JVM implementation of phext (11-dimensional plain hypertext),
 tracking the canonical Rust implementation at
-https://github.com/wbic16/libphext-rs — this port is at **0.6.0**,
-feature-identical to libphext-rs 0.6.0.
+https://github.com/wbic16/libphext-rs — this port is at **0.6.1**,
+feature-identical to libphext-rs 0.6.1.
 
 Package: `io.phext.libphext`
 
@@ -24,7 +24,7 @@ For example: `5.5.5/4.6.7/9.5.9`. Coordinate components are unbounded
 > Materializing, exploding, or indexing such a graph costs memory
 > proportional to its populated scroll count. Keep graphs sparse.
 
-## Surface (mirrors libphext-rs 0.6.0)
+## Surface (mirrors libphext-rs 0.6.1)
 
 - **Core** (`Phext.kt`): `fetch`, `insert`, `replace`, `remove`,
   `rangeReplace`, `phokenize`, `nextScroll`, `explode`, `implode`,
@@ -53,6 +53,16 @@ For example: `5.5.5/4.6.7/9.5.9`. Coordinate components are unbounded
   `serializeChains`, and `$N:<address>` multiverse fetch
   (`Chain.fetch`, `parseUniverseAddress`). A bare address means
   universe 1; fetch misses return "".
+- **Line/column addressing** (`Addressing.kt`, new in 0.6.1):
+  `ScrollPosition`, `PointAddress`, `RangeAddress`,
+  `parsePointAddress`, `parseRangeAddress`, and the chain operations
+  `Chain.resolvePoint` / `fetchPoint` / `resolveRange` / `fetchRange`.
+  A point is `[$N:]<coordinate>@<line>,<column>`, optionally with
+  `+<offsetChars>`; a range is two points joined by one hyphen, stored
+  canonicalized (endpoints ascending, `$1:` never written). Positions
+  are 1-based caret boundaries (half-open); columns and offsets count
+  Unicode scalar values (code points) — never UTF-16 code units or
+  bytes. Resolution errors fail (null / ""), never clamp.
 
 ## Build & test
 
@@ -67,7 +77,10 @@ The test suite ports the libphext-rs suites (phext, phokenize, binary,
 seal, chain) and runs the shared 0.6 chain conformance fixtures in
 `tests/fixtures/chains/` (10 cases, 42 fetches — structure, fetches with
 found flags, and byte-identical round-trips, verified against
-manifest.json).
+manifest.json) plus the shared 0.6.1 range conformance fixtures in
+`tests/fixtures/ranges/` (6 cases, 69 ops — point/range parsing and
+canonical form, resolution offsets, and point/range fetches, consumed
+from `expected.tsv`).
 
 ## Publish
 
