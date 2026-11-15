@@ -28,7 +28,7 @@ internal object Xxh3 {
 
     // XXH3_kSecret (192 bytes), from xxhash.h
     private val SECRET: ByteArray = byteArrayOf(
-        0xb8.toByte(), 0xfe.toByte(), 0x6c, 0x39, 0x23, 0xa4.toByte(), 0x4a, 0x9b.toByte(),
+        0xb8.toByte(), 0xfe.toByte(), 0x6c, 0x39, 0x23, 0xa4.toByte(), 0x4b, 0xbe.toByte(),
         0x7c, 0x01, 0x81.toByte(), 0x2c, 0xf7.toByte(), 0x21, 0xad.toByte(), 0x1c,
         0xde.toByte(), 0xd4.toByte(), 0x6d, 0xe9.toByte(), 0x83.toByte(), 0x90.toByte(), 0x97.toByte(), 0xdb.toByte(),
         0x72, 0x40, 0xa4.toByte(), 0xa4.toByte(), 0xb7.toByte(), 0xb3.toByte(), 0x67, 0x1f,
@@ -317,7 +317,7 @@ internal object Xxh3 {
             var acc64 = acc[lane]
             acc64 = acc64 xor (acc64 ushr 47)
             acc64 = acc64 xor key64
-            acc64 *= PRIME32_2
+            acc64 *= PRIME32_1
             acc[lane] = acc64
         }
     }

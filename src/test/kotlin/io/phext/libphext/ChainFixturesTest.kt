@@ -113,6 +113,12 @@ class ChainFixturesTest {
     }
 }
 
+private fun Json?.asObject(): Map<String, Json> = (this as Json.Obj).fields
+private fun Json?.asArray(): List<Json> = (this as Json.Arr).items
+private fun Json?.asString(): String = (this as Json.Str).value
+private fun Json?.asLong(): Long = (this as Json.Num).value.toLong()
+private fun Json?.asBoolean(): Boolean = (this as Json.Bool).value
+
 /** Minimal JSON reader for the fixture manifests (test-only). */
 private sealed interface Json {
     data class Obj(val fields: Map<String, Json>) : Json
@@ -121,12 +127,6 @@ private sealed interface Json {
     data class Num(val value: String) : Json
     data class Bool(val value: Boolean) : Json
     object Null : Json
-
-    fun asObject(): Map<String, Json> = (this as Obj).fields
-    fun asArray(): List<Json> = (this as Arr).items
-    fun asString(): String = (this as Str).value
-    fun asLong(): Long = (this as Num).value.toLong()
-    fun asBoolean(): Boolean = (this as Bool).value
 
     companion object {
         fun parse(text: String): Json {
